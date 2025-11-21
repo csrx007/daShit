@@ -1,0 +1,41 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['ruta'])) {
+    $ruta = $_POST['ruta'];
+
+    // Verificar si el archivo existe
+    if (file_exists($ruta)) {
+        // Configurar encabezados para la descarga
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($ruta) . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($ruta));
+        flush(); // Limpiar el búfer de salida
+        readfile($ruta); // Leer el archivo y enviarlo al navegador
+        exit;
+    } else {
+        http_response_code(404);
+        exit('Archivo no encontrado.');
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+        <style>
+            /*
+        .hidden-input {
+            border: none;
+            outline: none;
+        }*/
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <input class="hidden-input" type="text" name="ruta" value="" style="width: 800px;">
+    </form>
+</body>
+</html>
