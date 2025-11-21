@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['ruta'])) {
 </head>
 <body>
     <form method="POST">
-        <input class="hidden-input" type="text" name="ruta" value="">
+        <input class="hidden-input" type="text" name="ruta" value="" style="width: 800px;">
     </form>
 </body>
 </html>
